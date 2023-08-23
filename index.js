@@ -35,34 +35,37 @@ const questionsArray = [
     }
 ,];
 
+// logoGenerator function generetes the logo accocding to the user input data
 function logoGenerator(answers) {
     const { characters, textColor, shape, shapeColor } = answers;
     let shapeObj;
   
     switch (shape) {
       case 'circle':
-        shapeObj = new circle();
+        shapeObj = new circle();// creating a new shape (circle)
         break;
       case 'square':
-        shapeObj = new square();
+        shapeObj = new square();//creating a new shape (square)
         break;
       case 'triangle':
-        shapeObj = new triangle();
+        shapeObj = new triangle();//creating a new shape (triangle)
         break;
       default:
         console.log('Invalid shape');
         return;
     }
   
-    shapeObj.setColor(shapeColor);
+    shapeObj.setColor(shapeColor); // set the fill color to shape
   
-    const svgContent = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+    //generates the logo with chosen shape, given text and color
+
+    const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
         ${shapeObj.renderShapes()}
         <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" fill="${textColor}" font-size="50">${characters}</text>
-      </svg>
-    `;
-  
+      </svg>`;
+
+  //writes the logo to the file name logo.svg in the examples folder
+
     fs.writeFile('./examples/logo.svg', svgContent, (err) => {
       if (err) {
         console.error('Error writing SVG file:', err);
@@ -72,6 +75,7 @@ function logoGenerator(answers) {
     });
   }
   
+  // logoMain function  is the main function get the user input data and call the logoGenerator function.
 function logoMain() {
     inquirer.prompt(questionsArray).then((answers) => {
       logoGenerator(answers);
